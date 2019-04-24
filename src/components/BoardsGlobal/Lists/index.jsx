@@ -4,7 +4,7 @@ import { Ctx } from '../../Ctx'
 
 import ListName from './$listName'
 import ListForm from './$listForm'
-import ClosePanelButton from './__closeListPanelBtn';
+import RemoveListButton from './__removeListButton';
 import Tasks from '../Tasks';
 
 // let mouseX, mouseY
@@ -47,24 +47,25 @@ import Tasks from '../Tasks';
 export default ({ id }) => {
   const { store, dispatch } = useContext(Ctx)
   const localBoard = store.boards[id]
+
   return (
     localBoard.lists ?
       localBoard.lists.map((elem, index) => { 
         return (
           <div
-            key={index}
+            key={elem._id}
             className='list'>
-            <ClosePanelButton
+            {/* <RemoveListButton
               boardId={id}
               listId={index}
               dispatch={dispatch}
-            />
-            <ListName name={elem.name} />
+            /> */}
+            <ListName listName={elem.listName} />
             <ListForm
               form={elem.form}
               boardId={id}
               listId={index} />
-            <Tasks boardId={id} listId={index} />
+            {/* <Tasks boardId={id} listId={index} /> */}
           </div>
        )
       }): null

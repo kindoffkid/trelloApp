@@ -1,8 +1,8 @@
 import React from 'react'
-export default ({ name }) => {
+export default ({ listName }) => {
   return (
     <div className='list_title'>
-      {name}
+      {listName}
     </div>
   )
 }

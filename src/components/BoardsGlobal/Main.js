@@ -22,6 +22,7 @@ export default ({ url }) => {
         <BoardTitle title={boardName} />
         <div className="elem_wrapper">
           <Lists id={id} />
+
           {/* <Lists
             lists={lists}
             id={id}
