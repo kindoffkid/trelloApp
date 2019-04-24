@@ -38,4 +38,32 @@ path.delete('/deleteList?', async (req, res) => {
   }
 })
 
+path.delete('/deleteTask?', async (req, res) => {
+  try {
+    const { id, taskId } = req.query
+    const deleteTaskFromList_QUERY = await listSchema.updateOne({
+        _id: id
+      },
+        {
+          $pull: {
+            tasks: { taskId }
+          }
+        }
+      ).exec()
+    res.status(200).json({
+      method: 'DELETE',
+      url: '/api/lists/deleteTask',
+      status: '200',
+      data: deleteTaskFromList_QUERY
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      method: 'DELETE',
+      url: '/api/lists/deleteTask',
+      status: '500',
+      erorr: error.message
+    })
+  }
+})
 module.exports = path

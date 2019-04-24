@@ -31,17 +31,21 @@ path.post('/newList?', async (req, res) => {
 
 path.post('/addTask?', async (req, res) => {
   try {
-    const { id, taskId } = req.query
+    const { id, task, nickname } = req.query
     const updateList_Query = await listSchema.updateOne(
       {
         _id: id
       },
       {
         $push: {
-          tasks: taskId
+          tasks: {
+            task: task,
+            time: Date.now(),
+            nickname: nickname
+          }
         }
-      }
-    )
+      })
+    
     res.status(200).json({
       method: 'PUT',
       url: '/api/lists',
@@ -58,5 +62,4 @@ path.post('/addTask?', async (req, res) => {
     })
   }
 })
-
 module.exports = path

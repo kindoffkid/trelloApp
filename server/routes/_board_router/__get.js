@@ -31,6 +31,7 @@ path.get('/', async (req, res) => {
 })
 path.get('/getById?', async (req, res) => {
   try {
+    console.log( req.query )
     const { id } = req.query
     const getBoardById_QUERY =
       await boardSchema.find({ _id: id }).populate('lists').exec()

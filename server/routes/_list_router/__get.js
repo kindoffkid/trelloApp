@@ -36,11 +36,10 @@ path.get('/getById?', async (req, res) => {
     const getListById_QUERY = await listSchema.findById({
       _id: id
     })
-      .populate('tasks')
       .populate('board')
     res.status(200).json({
       method: 'GET',
-      url: '/api/lists/:id',
+      url: '/api/lists/getById',
       status: '200',
       data: getListById_QUERY
     })
@@ -48,7 +47,7 @@ path.get('/getById?', async (req, res) => {
     console.error(error)
     res.status(error.status).json({
       method: 'GET',
-      url: '/api/lists/:id',
+      url: '/api/lists/getById',
       status: error.status,
       message: error.message
     })

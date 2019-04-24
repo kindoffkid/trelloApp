@@ -12,14 +12,16 @@ path.use('/', deLete)
 /* 
 
 / get all
-/betById?  get by id, id in urlencoded
+/betById?id=  get by id, id in urlencoded
 
 /newList? POST with new listName, boardId
-/addTask? POST with listId, taskId (add existing task to list)
+/addTask? POST with id, task, nickname (add existing task to list)
 
-/updateName? PUT with listId, and new listName
+/updateName? PUT with id, listName
 
-/deleteList? DELETE with listId, boardId
+/deleteList? DELETE with id, boardId
+/deleteTask? DELETE with id, taskId
+
 
 */
 module.exports = path
