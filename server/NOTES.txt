@@ -1,0 +1,3 @@
+// TO SET GLOBAL VARIABLES IN NODE IN WINDOWS USE DESCRIPTION BELOW
+   npm "start": "set NODE_ENV=production&& set NODE_LOVE=sex&& nodemon index.js"
+   // THIS WILL SET THE NODE_ENV to production and NODE_LOVE to sex, and start nodemon index.js

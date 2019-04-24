@@ -1,0 +1,51 @@
+
+.modal {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  min-width: 200px;
+  min-height: 150px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+  align-items: center;
+
+  // BACKGROUND
+  &__background {
+    background: rgba(0, 0, 0, 0.7);
+    width: 100vw;
+    height: 100vh;
+  }
+
+  &__headline{
+    font-size: .9em;
+  }
+
+  &__label{
+    width: 100%;
+    text-align: center;
+    display: block;
+    padding: 5px 0;
+    font-size: .5em;
+    color: rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+    font-style: oblique;
+  }
+  &__input {
+    display: block;
+  }
+
+  &__btn {
+    background: #000;
+    border: none;
+    box-sizing: border-box;
+    min-height: 20px;
+    min-width: 45px;
+    margin-top: 25px;
+    box-shadow: none;
+    font-size: .4em;
+    color: whitesmoke;
+    padding: 3px 15px;
+  }
+}

@@ -1,0 +1,84 @@
+  {
+    "javascript.preferences.quoteStyle": "single",
+    "npm-intellisense.importQuotes": "'",
+    "npm-intellisense.importLinebreak": "\n",
+    "emmet.includeLanguages": {
+      "html": "html",
+      "javascript": [
+        "javascriptreact",
+        "css"
+      ],
+    },
+    // Bracket_Pair
+    "bracketPairColorizer.consecutivePairColors": [
+      "()",
+      "[]",
+      "{}",
+      [
+        "Gold",
+        "LightSeaGreen",
+        "Darkred"
+        // LightSkyBlue
+      ],
+      "Red"
+    ],
+    "bracketPairColorizer.colorMode": "Consecutive",
+    "window.zoomLevel": 1,
+    "editor.minimap.enabled": true,
+    "window.menuBarVisibility": "toggle",
+    "atomKeymap.promptV3Features": true,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.formatOnPaste": true,
+    "editor.fontSize": 22,
+    "editor.fontFamily": "Source code pro Medium",
+    "editor.accessibilitySupport": "off",
+    "liveServer.settings.donotVerifyTags": true,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "search.location": "panel",
+    "explorer.confirmDelete": false,
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "explorer.confirmDragAndDrop": false,
+    "editor.tabSize": 2,
+    "vsicons.dontShowNewVersionMessage": true,
+    "materialTheme.accent": "Remove accents",
+    "workbench.colorCustomizations": {},
+    "editor.wordWrap": "bounded",
+    "files.associations": {
+      "*.html": "html"
+    },
+    "workbench.iconTheme": "vscode-icons",
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorWidth": 10,
+    "workbench.sideBar.location": "right",
+    "editor.renderIndentGuides": false,
+    "editor.renderLineHighlight": "gutter",
+    "editor.renderControlCharacters": true,
+    "git.autofetch": true,
+    "editor.formatOnType": true,
+    "editor.fontWeight": "100",
+    "prettier.jsxSingleQuote": true,
+    "prettier.semi": false,
+    "prettier.singleQuote": true,
+    "editor.mouseWheelZoom": true,
+    // "editor.codeActionsOnSave": {
+    //     "source.organizeImports": true
+    // },
+    "workbench.activityBar.visible": false,
+    "workbench.statusBar.visible": false,
+    "git.confirmSync": false,
+    "workbench.colorTheme": "Subliminal",
+    "prettier.jsxBracketSameLine": true,
+    "bracketPairColorizer.highlightActiveScope": true,
+    // ACTIVE FILE IN STATUS BAR
+    "ActiveFileInStatusBar.fullpath": false,
+    "ActiveFileInStatusBar.color": "Gold",
+    "ActiveFileInStatusBar.revealFile": true,
+    // AUTO_RENAME_TAG
+    "auto-rename-tag.activationOnLanguage": [
+      "*",
+      "javascriptreact"
+    ],
+    "editor.matchBrackets": false,
+    "breadcrumbs.enabled": true,
+    "editor.renderWhitespace": "none",
+  }

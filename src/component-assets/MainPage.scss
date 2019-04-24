@@ -1,0 +1,163 @@
+.main_menu_boards {
+  position: relative;
+  margin-left: 15px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  // THE MENU
+  .main_menu{
+    margin-right: 15px
+  }
+  .board_close {
+    position: absolute;
+    right: 0;
+    top: -5%;
+    line-height: 100%;
+    vertical-align: center;
+    padding: 0 3px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    overflow: hidden;
+    border-radius: 50%;
+    transition: .3s all;
+    &:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+  }
+  // THE BOARDS
+  .main_menu_board{
+    width: 150px;
+    background: orange;
+    height: 45px;
+    display: flex; justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    text-decoration: none;
+    color: #000;
+    box-shadow: 0 3px 5px rgba( 0, 0, 0, 0.5);
+    transition: .3s all;
+    animation: creation .5s;
+  }
+}
+.main_menu {
+  position: relative;
+  padding: 5px 0;
+  display:flex; 
+  flex-direction: column; 
+  align-items: center;
+  width: 150px;
+  text-align: center;
+  background: lightseagreen;
+  border-radius: 5px;
+  animation: creation .5s;
+  
+  // TITLE
+  p {
+    color: whitesmoke;
+  }
+  // HR
+  hr {
+    width: 90%;
+    box-shadow: none;
+    text-shadow: none;
+    border: 1px solid whitesmoke;
+  }
+  // THE INPUT
+  input {
+    width: 90%;
+    font-size: .5em;
+    box-shadow: none;border:none;
+    box-shadow: 0 1px 5px #000;
+    padding: 3px 0 3px 7px;
+    transition: all .3s;
+    &:focus {
+      outline: none;
+      box-shadow: 0 1px 1px #000;
+    }
+  }
+  &_close {
+    position: absolute;
+    right: -1%; top: -4%;
+    height: 13px; width: 13px;
+    line-height: 10px;
+    vertical-align: center;
+    background: rgba( 0, 0, 0, 0.5);
+    color: white;
+    overflow: hidden;
+    border-radius: 50%;
+    transition: .3s all;
+    &:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+  }
+  // THE BUTTONS
+  div {
+    width: 100%;
+    display: flex; justify-content: space-evenly;
+    button {
+      border: none; box-shadow: none;
+      transition: all .3s;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .main-cancel {
+      font-size: .6em;
+      background: none; color: whitesmoke;
+      &:hover {
+        color: #000;;
+      }
+    }
+    .main-create {
+      border: 1px solid #000;
+      border-radius: 15px;
+      background: none;
+      padding: 3px 7px;
+      color: #000;
+      &:hover {
+        border-color: whitesmoke;
+        color: whitesmoke;
+      }
+      &:focus{
+        outline: none;
+        animation: btn-press .3s;
+      }
+    }
+  }
+}
+
+@keyframes btn-press {
+  from {
+    border: 1px solid #000;
+  }
+  to{
+    border: 1px solid whitesmoke;
+  }
+}
+
+.main_title {
+  display: block; 
+  width: 150px; 
+  height: 45px;
+  line-height: 45px;
+  vertical-align: center;
+  text-align: center;
+  font-size: .9em;
+  color: whitesmoke;
+  background: lightseagreen;
+  border-radius: 15px;
+  box-shadow: 0 3px 15px rgba( 0, 0, 0, 0.5);
+  transition: all .3s;
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+  animation: creation .5s;
+
+}
+.block_section {
+  margin: 5px 0;
+  animation: creation .5s;
+}
