@@ -9,11 +9,11 @@ path.get('/', async (req, res) => {
       .exec()
     res.status(200).json({
       method: 'GET',
-      url: '/api/lists',
+      url: '/api/boards',
       status: '200',
-      data: getAllBoards_QUERY.map((board, index) => {
+      data: getAllBoards_QUERY.map( board => {
         return {
-          id: board._id,
+          _id: board._id,
           boardName: board.boardName,
           lists: board.lists, 
         }
@@ -31,21 +31,16 @@ path.get('/', async (req, res) => {
 })
 path.get('/getById?', async (req, res) => {
   try {
-    console.log( req.query )
     const { id } = req.query
     const getBoardById_QUERY =
-      await boardSchema.find({ _id: id }).populate('lists').exec()
+      await boardSchema.find({ _id: id })
+        .populate('lists')
+        .exec()
     res.status(200).json({
       method: 'GET',
-      url: '/api/boards/:id',
+      url: '/api/boards/getById',
       status: '200',
-      data: getBoardById_QUERY.map((board) => {
-        return {
-          id: board._id,
-          boardName: board.boardName,
-          lists: board.lists,
-        }
-      })
+      data: getBoardById_QUERY
     })
   } catch (error) {
     console.error(error)

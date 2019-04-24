@@ -4,6 +4,17 @@ import { Ctx } from '../Ctx'
 export default () => {
   const { store, dispatch } = useContext(Ctx)
 
+  const fetcher = async () => {
+    const url = `/api/boards/new?boardName=${store.mainMenu.input}`
+    const query = await fetch(url, { method: 'POST' })
+    const response = await query.json()
+    if (response) {
+      return dispatch({
+        type: 'CREATE_BOARD',
+        payload: response
+      })
+    }
+  }
   return (
     <input
       className='main_menu_input block_section'
@@ -20,9 +31,7 @@ export default () => {
            dispatch({
             type: 'SET_FETCH_STATUS'
           })
-           dispatch({
-            type: 'CREATE_BOARD',
-          })
+            return fetcher()
         }
       }}
     />

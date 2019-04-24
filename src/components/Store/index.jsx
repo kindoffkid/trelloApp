@@ -22,7 +22,7 @@ const initialState = {
     input: '',
     flash: '',
   },
-  fetchStatus: true,
+  fetchStatus: false,
   modal: {
     state: true,
     input: '',
@@ -55,11 +55,12 @@ const reducer = (state, action) => {
         ...state,
         fetchStatus: true
       }
+    
     case 'SET_BOARDS':
       return {
         ...state,
         boards: [...state.boards, ...action.payload],
-        fetchStatus: !state.fetchStatus
+        fetchStatus: false
       }
     //// MAIN MENU MANAGING
     case 'SET_INPUT_VALUE':
@@ -73,7 +74,7 @@ const reducer = (state, action) => {
 
     // BOARD SETTINGS
     case 'CREATE_BOARD':
-      return handleCreateBoard(state)
+      return handleCreateBoard(state, action)
 
     case 'REMOVE_BOARD':
       return handleRemoveBoard(state, action)

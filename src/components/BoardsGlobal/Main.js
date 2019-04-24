@@ -5,7 +5,7 @@ import BoardInputPanel from './__BoardInputPanel'
 import BoardTitle from './BoardTitle'
 import Lists from './Lists'
 import { Ctx } from '../Ctx';
-import Logger from './Logger';
+
 
 /*      BOARD PANEL      */ 
 export default ({ url }) => {
@@ -14,12 +14,12 @@ export default ({ url }) => {
   const { boards } = store
 
   if(boards.length > 0) {
-    const { name, lists } = boards[id]
+    const { boardName, lists } = boards[id]
     return (
       <>
 
         {/* THE HEADER OF BOARD PAGE */}
-        <BoardTitle title={name} />
+        <BoardTitle title={boardName} />
         <div className="elem_wrapper">
           <Lists id={id} />
           {/* <Lists
@@ -29,7 +29,7 @@ export default ({ url }) => {
             boards={boards}
           /> */}
           <BoardInputPanel id={id} />
-          <Logger />
+
           {/* <>
             <AddListButton
               state={boardState}

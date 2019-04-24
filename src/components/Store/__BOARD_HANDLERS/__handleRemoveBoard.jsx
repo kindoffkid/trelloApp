@@ -1,12 +1,13 @@
-function handleSetBoards(boards, id) {
+const handleSetBoards = (boards, board_id) => {
   return boards.filter((elem, index) => {
-    return index !== id
+    return index !== board_id
   })
 }
 
-export default (state, action) => {
+export default (state, { board_id }) => {
   return {
       ...state,
-    boards: handleSetBoards(state.boards, action.board_id)
+    boards: handleSetBoards(state.boards, board_id),
+    fetchStatus: false
   }
 }

@@ -6,13 +6,24 @@ export default () => {
   const { store, dispatch } = useContext(Ctx)
 
   // MENU CLOSE BOARD BUTTON
-  function removeBoard(e, id) {
+  function removeBoard(e, boardIndexInLocalArray, boardId) {
     e.preventDefault()
     e.stopPropagation()
     dispatch({
-      type: 'REMOVE_BOARD',
-      board_id: id
+      type: 'SET_FETCH_STATUS',
     })
+    const fetcher = async () => {
+      const url = `/api/boards/deleteBoard?id=${boardId}`
+      const deleteBoard_QUERY = await fetch(url, { method: 'DELETE' })
+      const response = await deleteBoard_QUERY.json()
+      if (response) {
+        return dispatch({
+          type: 'REMOVE_BOARD',
+          board_id: boardIndexInLocalArray
+        })
+      }
+    } 
+    return fetcher()
   }
 
   return (
@@ -20,7 +31,7 @@ export default () => {
       return (
         <div
           className="main_menu_boards"
-          key={element.id}>
+          key={element._id}>
           <Link
             className="main_menu_board"
             to={`/boards/${index}`}>
@@ -28,7 +39,9 @@ export default () => {
           </Link>
           <span
             className='board_close'
-            onClick={e => removeBoard(e, index)}>
+            onClick={event => removeBoard(event,
+              index, element._id
+            )}>
             x</span>
         </div>
       );

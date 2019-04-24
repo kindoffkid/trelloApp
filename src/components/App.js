@@ -18,6 +18,8 @@ import {
   BoardPanel
 } from './MenuPage'
 
+import createBoardFetcher from '../component-assets/JS/Fetchers/__newBoardFetcher'
+
 // CONTEXT 
 import { Ctx } from './Ctx'
 import Modal from '../components/Modal'
@@ -27,7 +29,14 @@ export default () => {
   const [store, dispatch] = createStore()
   const { mainMenu } = store
 
-  
+  const handleNewBoardCreation = (event) => {
+    event.stopPropagation()
+    dispatch({ type: 'SET_FETCH_STATUS' })
+    if (store.mainMenu.input) {
+      return createBoardFetcher(store.mainMenu.input, dispatch)
+    }
+  }
+
   useEffect(() => {
     console.log('%cRENDERING APP', 'color: violet')
     fetcher(dispatch)
@@ -68,7 +77,11 @@ export default () => {
                 <MenuInput />
 
                 <Flash flash={mainMenu.flash} />
-                <Menu_Buttons />
+                  <Menu_Buttons
+                    handleNewBoardCreation={
+                      handleNewBoardCreation
+                    }
+                />
                 <CloseMenuButton
                   dispatch={dispatch} />
               </main>
@@ -144,7 +157,6 @@ async function fetcher(dispatch) {
     const payload = await fetch('/api/boards', { method: 'GET' })
     const data = await payload.json()
     if (data) {
-      console.table(data)
       return dispatch({
         type: 'SET_BOARDS',
         payload: data.data

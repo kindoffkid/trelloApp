@@ -1,5 +1,16 @@
-export default async state => {
-
+export default (state, { payload }) => {
+  return {
+    ...state,
+    boards: [
+      ...state.boards,
+      payload.data
+    ],
+    mainMenu: {
+      state: false,
+      input: '',
+    },
+    fetchStatus: false
+  }
 }
 
 // export default (state) => {
