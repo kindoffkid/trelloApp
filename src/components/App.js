@@ -157,9 +157,10 @@ async function fetcher(dispatch) {
     const payload = await fetch('/api/boards', { method: 'GET' })
     const data = await payload.json()
     if (data) {
+      console.log( data )
       return dispatch({
         type: 'SET_BOARDS',
-        payload: data.data
+        payload: [...data.data]
       })
     }
   } catch (errors) {

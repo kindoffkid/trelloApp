@@ -55,13 +55,24 @@ const reducer = (state, action) => {
         ...state,
         fetchStatus: true
       }
-    
     case 'SET_BOARDS':
       return {
         ...state,
-        boards: [...state.boards, ...action.payload],
+        boards: [
+          ...state.boards,
+          ...action.payload.map(elem => {
+            return {
+              ...elem,
+              panel: {
+                state: false,
+                input:'',
+              }
+            }
+          })
+        ],
         fetchStatus: false
       }
+    
     //// MAIN MENU MANAGING
     case 'SET_INPUT_VALUE':
       return __setMainMenuInput(state, action)

@@ -17,13 +17,18 @@ path.post('/newList?', async (req, res) => {
         lists: insertNewList_QUERY._id
       }
     }
-  )
+  ).exec()
+  
   res.status(200).json({
     method: 'POST',
     url: '/api/lists',
     status: '200',
     data: {
-      INSERTED_LIST: insertNewList_QUERY,
+      INSERTED_LIST: {
+        _id: insertNewList_QUERY._id,
+        listName: insertNewList_QUERY.listName,
+        tasks: insertNewList_QUERY.tasks
+      },
       UPDATED_BOARD: addListIdToBoard_QUERY
     }
   })

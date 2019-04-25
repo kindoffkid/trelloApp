@@ -10,6 +10,7 @@ path.get('/', async (req, res) => {
   try {
     const getAllLists_QUERY = await
       listSchema.find()
+        .select('_id listName tasks')
         .populate('board')
     console.log(getAllLists_QUERY)
     res.status(200).json({

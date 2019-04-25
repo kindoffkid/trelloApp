@@ -3,7 +3,13 @@ export default (state, { payload }) => {
     ...state,
     boards: [
       ...state.boards,
-      payload.data
+      {
+        ...payload.data,
+        panel: {
+          state: false,
+          input: '',
+        }
+      }
     ],
     mainMenu: {
       state: false,

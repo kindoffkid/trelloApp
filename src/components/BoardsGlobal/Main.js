@@ -6,22 +6,121 @@ import BoardTitle from './BoardTitle'
 import Lists from './Lists'
 import { Ctx } from '../Ctx';
 
-
 /*      BOARD PANEL      */ 
 export default ({ url }) => {
-  const id = parseInt(url.match.params.id)
-  const { store } = useContext(Ctx)
+
+  const localBoardIndex =
+    parseInt(url.match.params.id)
+  
+  const { store, dispatch } = useContext(Ctx)
   const { boards } = store
 
+  const handleOnChange = event =>
+    dispatch({
+      type: 'SET_BOARD_PANEL_INPUT',
+      id: localBoardIndex,
+      payload: event.target.value
+    })
+
+  // CREATE NEW LIST ON KEY "ENTER"
+  const handleNewListCreation = (event, _id) => {
+    if (event.keyCode === 13) {
+      const fetcher = async () => {
+        try {
+          const url = `/api/lists/newList?listName=${event.target.value}&boardId=${_id}`
+          const createNewList_QUERY =
+            await fetch(
+              url,
+              { method: 'POST', })
+          const newList_QUERY_response =
+            await createNewList_QUERY.json()
+          if (newList_QUERY_response) {
+            return dispatch({
+              type: 'CREATE_LIST',
+              boardIndex: localBoardIndex,
+              payload: newList_QUERY_response.data.INSERTED_LIST
+            })
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      fetcher()
+    } else {
+      return
+    }
+  }
+
+  // HANDLE DELETE LIST BUTTON
+  const handleRemoveListButton =  (boardIndex, listIndex, listId) =>
+  {
+    const boardId =
+      boards[localBoardIndex]._id
+    
+    const fetcher = async () => {
+      const url = `/api/lists/deleteList?id=${listId}&boardId=${boardId}`
+     
+
+      const deleteList_QUERY = await fetch(url, { method: 'DELETE' })
+
+      const deletelist_QUERY_response = await deleteList_QUERY.json()
+      const { status } = deletelist_QUERY_response
+
+      if ( status === '200' ) {
+        return dispatch({
+          type: 'REMOVE_LIST',
+          boardIndex: boardIndex,
+          listIndex: listIndex
+        })
+      }
+    }
+   return fetcher()
+  }
+
+  // HANDLE THE INPUT BOARD STATE
+  const handleBoardState = () => 
+    dispatch({
+      type: 'SET_BOARD_PANEL_STATE',
+      id: localBoardIndex
+    })
+
   if(boards.length > 0) {
-    const { boardName, lists } = boards[id]
+    const { boardName, lists, panel, _id } = boards[localBoardIndex]
     return (
       <>
 
         {/* THE HEADER OF BOARD PAGE */}
         <BoardTitle title={boardName} />
         <div className="elem_wrapper">
-          <Lists id={id} />
+
+          <>
+            {lists ?
+              lists.map((elem, listIndex) => {
+                return (
+                  <div
+                    key={elem._id}
+                    className='list'>
+
+                    {/* REMOVE LIST BUTTON */}
+                    <span
+                      onClick={() => handleRemoveListButton(localBoardIndex, listIndex, elem._id)}
+                      className='list_closeBtn'>
+                        X
+                    </span>
+                    <div className='list_title'>
+                      {elem.listName}
+                    </div>
+                    {/* <ListForm
+                      form={elem.form}
+                      boardId={id}
+                      listId={listIndex} /> */}
+                    {/* <Tasks boardId={id} listId={index} /> */}
+                  </div>
+                )
+              }) : null}
+          </>
+
+          {/* <Lists boardId={boardId} /> */}
 
           {/* <Lists
             lists={lists}
@@ -29,7 +128,13 @@ export default ({ url }) => {
             setBoards={setBoards}
             boards={boards}
           /> */}
-          <BoardInputPanel id={id} />
+
+          <BoardInputPanel
+            {...panel}
+            onChange={handleOnChange}
+            createList={event => handleNewListCreation(event, _id)}
+            setBoardState={handleBoardState}
+          />
 
           {/* <>
             <AddListButton
@@ -49,6 +154,21 @@ export default ({ url }) => {
   }
   return null
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ADD LIST BUTTON
 function AddListButton({state, setBoardState}){
