@@ -1,0 +1,11 @@
+{
+  "name": "arraymethods",
+  "version": "1.0.0",
+  "description": "methods to work with array",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MIT",
+  "license": "MIT"
+}
