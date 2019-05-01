@@ -13,3 +13,10 @@ a {
   text-decoration: none;
   color: #000;
 }
+button, input[type='submit']{
+  border: none;
+  box-shadow: none;
+  &:hover{
+    cursor: pointer;
+  }
+}

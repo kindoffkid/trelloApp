@@ -23,8 +23,9 @@ import createBoardFetcher from '../component-assets/JS/Fetchers/__newBoardFetche
 import { Ctx } from './Ctx'
 import Modal from '../components/Modal'
 import FancySpinner from '../component-assets/JS/Spinner'
-import LogHandler from './LogHandler'
-const LogFormComponent = withRouter(LogHandler)
+import LogHandler from './LogHandler/__Sign_In'
+import __Sign_Up from './LogHandler/__Sign_Up';
+
 
 export default () => {
   const [store, dispatch] = createStore()
@@ -57,16 +58,22 @@ export default () => {
             nickname={store.nickname}
             logged={store.logged}
           />
-          <LogFormComponent />
+          <Route 
+            exact path='/' 
+            render={URL => <LogHandler {...URL}/>} />
+          <Route
+            path='/sign_up'
+            render={URL => <__Sign_Up {...URL} />}
+          />
         </Router>
       </Ctx.Provider>
       :
-    !store.nickname ? 
-      <Ctx.Provider
-        value={{ store, dispatch }} >
-        <Modal /> 
-      </Ctx.Provider>
-      :
+    // !store.nickname ? 
+    //   <Ctx.Provider
+    //     value={{ store, dispatch }} >
+    //     <Modal /> 
+    //   </Ctx.Provider>
+    //   :
     store.fetchStatus ? 
       <FancySpinner />
       :

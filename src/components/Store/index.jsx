@@ -17,40 +17,7 @@ import __setModalState from './__MODAL_HANDLERS/__setModalState';
 import dragAndDropHANDLER from './dragAndDropHANDLER';
 import _Log_Reg_Forms_HANDLERS from './_Log_Reg_Forms_HANDLERS';
 
-
-
-const initialState = {
-  nickname: '',
-  logged: false,
-  boards: [],
-  mainMenu: {
-    state: false,
-    input: '',
-    flash: '',
-  },
-  fetchStatus: false,
-  modal: {
-    state: true,
-    input: '',
-  },
-  draggedItem: {
-    listIndex: null,
-    taskIndex: null,
-
-    listId: null,
-    taskId: null,
-  },
-  forms: {
-    log: {
-      email: '',
-      password: '',
-    },
-    reg: {
-      email: '',
-      password: '',
-    },
-  }
-}
+import initialState from './initialState'
 
 const reducer = (state, action) => {
   switch (action.category) {

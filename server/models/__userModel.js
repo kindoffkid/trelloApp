@@ -8,6 +8,13 @@ const UserSchema = new Schema({
     unique: [true, 'Email needed to be unique'],
     match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   },
+  username: {
+    type: String,
+    required: [true, 'Username is requred'],
+    minlength: 5,
+    maxlength: 16,
+    unique: true,
+  },
   password: {
     type: String,
     required: [true, 'Password is required'],
