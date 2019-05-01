@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../component-assets/FancySpinner.scss'
+import '../../FancySpinner.scss'
 export default () => {
   return (
     <div className='spinner'>

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import "../component-assets/MainPage.scss";
 
 import Nav from './Nav/Nav'
-import Board from './BoardsGlobal/Main'
-
+import Board from './BoardsGlobal/BoardMainPage'
 // REDUCER AND STORE
 import createStore from './Store'
 
@@ -23,7 +22,9 @@ import createBoardFetcher from '../component-assets/JS/Fetchers/__newBoardFetche
 // CONTEXT 
 import { Ctx } from './Ctx'
 import Modal from '../components/Modal'
-import FancySpinner from './Spinner'
+import FancySpinner from '../component-assets/JS/Spinner'
+import LogHandler from './LogHandler'
+const LogFormComponent = withRouter(LogHandler)
 
 export default () => {
   const [store, dispatch] = createStore()
@@ -44,9 +45,23 @@ export default () => {
   }, [])
 
 
-
+  const logOut = () => dispatch({
+    type: 'LOG_OUT'
+  })
   return (
-   !store.nickname ? 
+    !store.logged ?
+      <Ctx.Provider
+        value={{ store, dispatch }} >
+        <Router>
+          <Nav
+            nickname={store.nickname}
+            logged={store.logged}
+          />
+          <LogFormComponent />
+        </Router>
+      </Ctx.Provider>
+      :
+    !store.nickname ? 
       <Ctx.Provider
         value={{ store, dispatch }} >
         <Modal /> 
@@ -58,7 +73,12 @@ export default () => {
       <Ctx.Provider
       value={{ store, dispatch }} >
       <Router>
-        <Nav nickname={store.nickname} />
+        <Nav
+          nickname={store.nickname}
+          
+          logged={store.logged}
+          logOut={logOut}
+        />
         <Route
           exact path='/'
           render={() =>
@@ -97,7 +117,7 @@ export default () => {
         />
       </Router>
       </Ctx.Provider>
-  );
+  )
 }
 
 // export default () => {
@@ -152,6 +172,7 @@ function checkForExistingNickname(dispatch) {
     })
   }
 }
+
 async function fetcher(dispatch) {
   try {
     const payload = await fetch('/api/boards', { method: 'GET' })

@@ -5,17 +5,34 @@ const path = require('express').Router()
 path.get('/', async (req, res) => {
   try {
     const getAllBoards_QUERY = await boardSchema.find()
-      .populate('lists')
+      .populate({ path: 'lists', select: '_id listName tasks'})
       .exec()
+    console.log( getAllBoards_QUERY )
     res.status(200).json({
-      method: 'GET',
+      method: 'GET',  
       url: '/api/boards',
       status: '200',
       data: getAllBoards_QUERY.map( board => {
         return {
           _id: board._id,
           boardName: board.boardName,
-          lists: board.lists, 
+          lists: board.lists.map(list => ({
+            _id: list._id,
+            listName: list.listName,
+            tasks: list.tasks.map(task => ({
+              _id: task._id,
+              task: task.task,
+              nickname: task.nickname,
+              time: new Date(task.time).toLocaleString(undefined, {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                weekday: 'short',
+                day: '2-digit',
+                month: 'short'
+              })
+            }))
+          }))
         }
        })
     })

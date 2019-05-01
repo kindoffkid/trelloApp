@@ -1,8 +1,13 @@
+import { arraySlicer } from '../Utils';
+
 export default (state, { id }) => {
   const { boards } = state
   return {
     ...state,
-    boards: returnNewArray(boards, id, {
+    boards: arraySlicer(
+      boards,
+      id,
+      {
       ...boards[id],
       panel: {
         ...boards[id].panel,
@@ -10,11 +15,4 @@ export default (state, { id }) => {
       }
     })
   }
-}
-function returnNewArray(array, id, newItem) {
-  return [
-    ...array.slice(0, id),
-    newItem,
-    ...array.slice(id + 1)
-  ]
 }

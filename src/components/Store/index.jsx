@@ -12,10 +12,16 @@ import __handleTaskCreation from './__TASK_HANDLERS/__handleTaskCreation';
 import __setMainMenuState from './__MAIN_MENU_HANDLERS/__setMenuState';
 import __setMainMenuInput from './__MAIN_MENU_HANDLERS/__setInputValue';
 import __cancelCreateBoard from './__MAIN_MENU_HANDLERS/__cancelCreateBoard';
+import __setModalInput from './__MODAL_HANDLERS/__setModalInput';
+import __setModalState from './__MODAL_HANDLERS/__setModalState';
+import dragAndDropHANDLER from './dragAndDropHANDLER';
+import _Log_Reg_Forms_HANDLERS from './_Log_Reg_Forms_HANDLERS';
+
 
 
 const initialState = {
   nickname: '',
+  logged: false,
   boards: [],
   mainMenu: {
     state: false,
@@ -26,29 +32,33 @@ const initialState = {
   modal: {
     state: true,
     input: '',
+  },
+  draggedItem: {
+    listIndex: null,
+    taskIndex: null,
+
+    listId: null,
+    taskId: null,
+  },
+  forms: {
+    log: {
+      email: '',
+      password: '',
+    },
+    reg: {
+      email: '',
+      password: '',
+    },
   }
 }
-// const log = {
-//   nickname: state.nickname,
-//   time: new Date().toLocaleString(undefined, {
-//     hour: '2-digit',
-//     minute: '2-digit',
-//     hour12: true,
-//   }),
-//   log: '',
-// }
-
-// let loggg = {
-//   nickname: state.nickname,
-//   time: new Date().toLocaleString(undefined, {
-//     hour: '2-digit',
-//     hour12: true,
-//     minute: '2-digit'
-//   })
-// }
 
 const reducer = (state, action) => {
-  
+  switch (action.category) {
+    case 'DRAG_AND_DROP':
+      return dragAndDropHANDLER(state, action)
+    case 'REG_LOG_FORM':
+      return _Log_Reg_Forms_HANDLERS(state, action)
+  }
   switch (action.type) {
     case 'SET_FETCH_STATUS':
       return {
@@ -63,6 +73,15 @@ const reducer = (state, action) => {
           ...action.payload.map(elem => {
             return {
               ...elem,
+              lists: elem.lists.map(list => {
+                return {
+                  ...list,
+                  form: {
+                    state: false,
+                    input: '',
+                  }
+                }
+               }),
               panel: {
                 state: false,
                 input:'',
@@ -112,20 +131,20 @@ const reducer = (state, action) => {
 
     // MODAL HANDLERS
     case 'SET_MODAL_INPUT':
-      return {
-        ...state,
-        modal: {
-          ...state.modal,
-          input: action.payload
-        }
-      }
+      return __setModalInput(state, action)
     case 'SET_MODAL_STATE':
+      return __setModalState(state, action)
+    case 'SET_LOGGED':
       return {
         ...state,
-        modal: {
-          ...state.modal,
-          state: action.payload
-        }
+        logged: true,
+        nickname: action.payload
+      }
+    case 'LOG_OUT':
+      return {
+        ...state,
+        nickname: '',
+        logged: false
       }
     case 'SET_NICKNAME_BY_ModalINPUT':
       localStorage.setItem('LocalNickname', state.modal.input)
@@ -146,13 +165,11 @@ const reducer = (state, action) => {
           state: false
         }
       }
-
     // DEFAULT
     default:
       return state
   }
 }
-
 
 export default () => {
   const [state, reactDispatch ] = useReducer(reducer, initialState)
@@ -163,6 +180,6 @@ export default () => {
     })
     return reactDispatch(action)
   }
+
   return [state, dispatch]
 }
-

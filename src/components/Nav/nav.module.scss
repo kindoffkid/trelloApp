@@ -1,0 +1,45 @@
+.navv {
+  width: 100%;
+
+  .nav_link{
+    width: 100%;
+
+    svg{
+      margin: auto;
+      margin-top: 25px;
+      display: block;
+      font-size: 3em;
+      font-weight: 100;
+      color: #000;
+      animation: circle 5s linear infinite;
+    }
+
+  }
+
+}
+.wrapperUl {
+  display: flex; 
+  justify-content: space-evenly;
+}
+
+.navUl {
+  display: flex;
+  justify-content: space-evenly;
+
+  li{
+    a{
+    padding: 5px 15px;
+    margin: 0 5px;
+    transition: .2s all ease-in;
+      &:hover{
+        background: #999;
+      }
+    }
+  }
+
+}
+
+@keyframes circle {
+  from{transform: rotate(0)}
+  to{transform: rotate(360deg)}
+}

@@ -11,6 +11,7 @@ const { db } = require('./config/database')
 const {
   boardRouter,
   listRouter,
+  userRouter
 } = require('./routes')
 
 main.listen(4000, '127.0.0.1')
@@ -20,3 +21,4 @@ main.use(require('morgan')('dev'))
 
 main.use('/api/boards', boardRouter)
 main.use('/api/lists', listRouter)
+main.use('/api/users', userRouter)

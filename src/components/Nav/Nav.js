@@ -1,14 +1,38 @@
-import '../../component-assets/Nav.scss'
+
 import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
-export default ({nickname}) => {
-  useEffect(() => console.log( 'nav' ),[])
+import styles from './nav.module.scss'
+
+export default ({ nickname, logged, logOut }) => {
+  useEffect(() => console.log('nav'), [])
   return (
-    <nav>
-      <Link to="/" className="nav_link">
-        <i className="fas fa-atom" />
+    <nav className={styles.navv}>
+
+      <Link to='/' className={styles.nav_link}>
+        <i className='fas fa-atom' />
       </Link>
-      <h1>Hello, {nickname}</h1>
+
+      <ul
+        className={styles.wrapperUl}
+        style={logged ?
+          { display: 'flex' } : {
+            display: 'none'
+          }
+        }>
+        <li>n-name: {nickname} 
+
+        </li>
+        <li>
+          <ul className={styles.navUl}>
+            <li>
+              <Link to='/'>Main panel</Link>
+            </li>
+            <li>
+              <a onClick={logOut}>Log out</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </nav>
-  );
+  )
 }

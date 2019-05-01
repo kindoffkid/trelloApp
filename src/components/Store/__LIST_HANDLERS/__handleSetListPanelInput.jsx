@@ -1,15 +1,25 @@
-export default (state, { boardId, listId , payload}) => {
+import { arraySlicer } from '../Utils'
+
+export default (
+  state,
+  {
+    boardIndex,
+    listIndex,
+    payload
+  }) => {
   const { boards } = state,
-    board = boards[boardId],
-    list = board.lists[listId]
+    board = boards[boardIndex],
+    list = board.lists[listIndex]
   return {
     ...state,
-    boards: [
-      ...boards.slice(0, boardId),
+    boards: arraySlicer(
+      boards,
+      boardIndex,
       {
         ...board,
-        lists: [
-          ...board.lists.slice(0, listId),
+        lists: arraySlicer(
+          board.lists,
+          listIndex,
           {
             ...list,
             form: {
@@ -17,10 +27,9 @@ export default (state, { boardId, listId , payload}) => {
               input: payload
             }
           },
-          ...board.lists.slice(listId + 1)
-        ]
+        )
       },
-      ...boards.slice(boardId + 1)
-    ]
+
+    )    
   }
 }
