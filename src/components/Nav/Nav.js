@@ -19,8 +19,10 @@ export default ({ nickname, logged, logOut }) => {
             display: 'none'
           }
         }>
-        <li>n-name: {nickname} 
-
+        <li>n-name: 
+          <span className={styles.nickname}>
+            {nickname} 
+          </span>
         </li>
         <li>
           <ul className={styles.navUl}>

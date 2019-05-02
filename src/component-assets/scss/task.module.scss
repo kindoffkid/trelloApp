@@ -1,0 +1,29 @@
+.taskContainer{
+    width: 95%;
+    margin: auto; 
+    margin-bottom: 5px;
+    // text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 5px;
+    // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+}
+.nicknameWrapper{
+  font-size: .9em;
+  padding-bottom: 5px;
+  text-align: center;
+  .nickname{
+    font-size: 1.1em;
+    color: orange;
+  }
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.task{
+  margin: 5px 0;
+  font-size: .8em;
+  // color: lightblue;
+}
+.time{
+  color: lightseagreen;
+  // text-align: center;
+}

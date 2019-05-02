@@ -20,15 +20,11 @@ export default {
     taskId: null
   },
   forms: {
-    log: {
-      email: '',
-      password: ''
+    log_form: {
+      log_email: '',
+      log_pass: ''
     },
-    reg: {
-      username: '',
-      email: '',
-      password: ''
-    },
+    
     reg_form: {
       reg_uname: '',
       reg_email: '',

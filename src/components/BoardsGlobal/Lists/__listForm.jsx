@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Ctx } from '../../../Ctx'
+import { Ctx } from '../../Ctx'
 export default ({
   input,
   state,
@@ -17,6 +17,7 @@ export default ({
     '\n',
     'listIndex', listIndex)
     dispatch({
+      category: 'LIST_CASE',
       type: 'SET_LIST_STATE',
       boardIndex: boardIndex,
       listIndex: listIndex
@@ -26,6 +27,7 @@ export default ({
   // FORM INPUT onChange HANDLER (INPUT FOR NEW TASK)
   const handleListFormInputOnChange = event => {
     return dispatch({
+      category: 'LIST_CASE',
       type: 'SET_LIST_INPUT',
       boardIndex: boardIndex,
       listIndex: listIndex,
@@ -35,21 +37,21 @@ export default ({
 
   // HANDLE CREATE NEW TASK ON KEY "ENTER"
   const handleTaskCreationOnKeyUp = event => {
-    if (event.keyCode === 13) {
-      const createrOfTask = async () => {
+    if (
+      event.keyCode === 13
+      && event.target.value) {
+      return (async () => {
         const url = `/api/lists/addTask?id=${_listId}&nickname=${nickname}&task=${event.target.value}&time=${Date.now()}`
         const createNewTask_QUERY = await fetch(url, { method: 'POST' })
         const { status, data:list } = await createNewTask_QUERY.json()
         status === '200' && dispatch({
-        type: 'CREATE_TASK',
+          category: 'TASK_CASE',
+          type: 'CREATE_TASK',
           boardIndex: boardIndex,
           listIndex: listIndex,
           payload: list
         })
-      }
-      return createrOfTask()
-    } else {
-      return 
+      })()
     }
   }
 
@@ -69,7 +71,7 @@ export default ({
         value={input}
         style={state ? { display: 'block' } : { display: 'none' }}
         onChange={handleListFormInputOnChange}
-        onKeyUp={event => handleTaskCreationOnKeyUp(event)}
+        onKeyUp={handleTaskCreationOnKeyUp}
       />
     </div>
   )

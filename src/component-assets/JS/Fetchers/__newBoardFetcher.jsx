@@ -6,6 +6,7 @@ export default async (input, dispatch) => {
   const response = await query.json()
   if (response) {
     return dispatch({
+      category: 'BOARDS',
       type: 'CREATE_BOARD',
       payload: response
     })

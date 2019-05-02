@@ -10,7 +10,7 @@ const path = require('express').Router()
 
 path.post('/sign_up?', async (req, res) => {
   try {
-    const { email, password } = req.query
+    const { email, password, username } = req.query
     const checkUser = await userSchema.findOne({ email: email }).exec()
     if (checkUser) {
       res.status(200).json({
@@ -22,6 +22,7 @@ path.post('/sign_up?', async (req, res) => {
     }
     if (!checkUser) {
       const saveUser_QUERY = await userSchema({
+        username: username,
         email: email,
         password: await crypt.hash(password, 10)
       }).save()
@@ -59,7 +60,7 @@ path.post('/sign_in?', async (req, res) => {
           data: {
             _id: checkUser._id,
             email: checkUser.email,
-            password: checkUser.password
+            username: checkUser.username
           }
         })
       }

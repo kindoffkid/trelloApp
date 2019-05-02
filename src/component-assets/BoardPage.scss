@@ -94,7 +94,8 @@
 // LIST CONTAINER
 .list {
   position: relative;
-  width:150px; height: 100%;
+  width:150px; 
+  // height: 100%;
   margin-left: 15px;
   margin-bottom:10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -166,13 +167,5 @@
         outline: none;
         color: rgba(0, 0, 0, 0.6);
     }
-  }
-  .task {
-    width: 85%;
-    margin: auto; 
-    margin-bottom: 5px;
-    text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
   }
 }

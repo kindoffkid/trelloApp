@@ -1,6 +1,6 @@
 .navv {
   width: 100%;
-
+  margin-bottom: 50px;
   .nav_link{
     width: 100%;
 
@@ -36,9 +36,13 @@
       }
     }
   }
-
 }
 
+.nickname{
+  font-style: oblique;
+  color: red;
+
+}
 @keyframes circle {
   from{transform: rotate(0)}
   to{transform: rotate(360deg)}

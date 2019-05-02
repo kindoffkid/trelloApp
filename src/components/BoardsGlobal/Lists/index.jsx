@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 
 import { Ctx } from '../../Ctx'
 
-import ListName from './$listName'
-import ListForm from './$listForm'
+import ListName from './__listName'
+import ListForm from './__listForm'
 import RemoveListButton from './__removeListButton';
 import Tasks from '../Tasks';
 

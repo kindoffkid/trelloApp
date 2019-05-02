@@ -10,20 +10,21 @@ export default () => {
     e.preventDefault()
     e.stopPropagation()
     dispatch({
+      // category: 'OTHER_CASE',
       type: 'SET_FETCH_STATUS',
     })
-    const fetcher = async () => {
+    return(async () => {
       const url = `/api/boards/deleteBoard?id=${boardId}`
       const deleteBoard_QUERY = await fetch(url, { method: 'DELETE' })
       const response = await deleteBoard_QUERY.json()
       if (response) {
         return dispatch({
+          category: 'BOARDS',
           type: 'REMOVE_BOARD',
           board_id: boardIndexInLocalArray
         })
       }
-    } 
-    return fetcher()
+    })()
   }
 
   return (

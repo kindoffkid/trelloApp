@@ -1,9 +1,10 @@
 import React, {  useContext } from 'react'
 import '../../component-assets/MainPage.scss'
+import taskStyles from '../../component-assets/scss/task.module.scss'
 
 import BoardInputPanel from './__BoardInputPanel'
 import BoardTitle from './BoardTitle'
-import ListForm from './Lists/$listForm'
+import ListForm from './Lists/__listForm'
 import { Ctx } from '../Ctx';
 
 
@@ -18,6 +19,7 @@ export default ({ url }) => {
 
   const handleOnChange = event =>
     dispatch({
+      category: 'BOARDS',
       type: 'SET_BOARD_PANEL_INPUT',
       id: localBoardIndex,
       payload: event.target.value
@@ -25,18 +27,17 @@ export default ({ url }) => {
 
   // CREATE NEW LIST ON KEY "ENTER"
   const handleNewListCreation = (event, _id) => {
-    if (event.keyCode === 13) {
-      const fetcher = async () => {
+    if (event.keyCode === 13 && event.target.value) {
+      return (async () => {
         try {
-          const url = `/api/lists/newList?listName=${event.target.value}&boardId=${_id}`
-          const createNewList_QUERY =
-            await fetch(
-              url,
-              { method: 'POST', })
-          const newList_QUERY_response =
-            await createNewList_QUERY.json()
+          const url = `/api/lists/newList?listName=${
+            event.target.value
+          }&boardId=${_id}`
+          const createNewList_QUERY = await fetch(url, { method: 'POST' })
+          const newList_QUERY_response = await createNewList_QUERY.json()
           if (newList_QUERY_response) {
             return dispatch({
+              category: 'LIST_CASE',
               type: 'CREATE_LIST',
               boardIndex: localBoardIndex,
               payload: newList_QUERY_response.data.INSERTED_LIST
@@ -45,23 +46,20 @@ export default ({ url }) => {
         } catch (error) {
           console.error(error)
         }
-      }
-      return fetcher()
+      })()
     } else {
       return
     }
   }
 
   // HANDLE DELETE LIST BUTTON
-  const handleRemoveListButton =  (boardIndex, listIndex, listId) =>
+  const handleRemoveListButton = (boardIndex, listIndex, listId) =>
   {
     const boardId =
       boards[localBoardIndex]._id
     
-    const fetcher = async () => {
+   return (async () => {
       const url = `/api/lists/deleteList?id=${listId}&boardId=${boardId}`
-     
-
       const deleteList_QUERY = await fetch(url, { method: 'DELETE' })
 
       const deletelist_QUERY_response = await deleteList_QUERY.json()
@@ -69,18 +67,19 @@ export default ({ url }) => {
 
       if ( status === '200' ) {
         return dispatch({
+          category: 'LIST_CASE',
           type: 'REMOVE_LIST',
           boardIndex: boardIndex,
           listIndex: listIndex
         })
       }
-    }
-   return fetcher()
+    })()
   }
 
   // HANDLE THE INPUT BOARD STATE
   const handleBoardState = () => 
     dispatch({
+      category: 'BOARDS',
       type: 'SET_BOARD_PANEL_STATE',
       id: localBoardIndex
     })
@@ -90,8 +89,15 @@ export default ({ url }) => {
     event.preventDefault()
     const { listId, taskId, listIndex: initialList } = store.draggedItem
 
-    console.log('%cDraggin over ME', 'color: green', 'LIST_INDEX: ', listIndex, 'TARGET', initialList)
-    const fetcher = async () => {
+    console.log(
+      '%cDraggin over ME',
+      'color: green',
+      'LIST_INDEX: ',
+      listIndex,
+      'TARGET',
+      initialList
+    )
+     return (async () => {
       if (listIndex === initialList) {
         return 
       }
@@ -106,14 +112,13 @@ export default ({ url }) => {
           dropTargetList: listIndex
         })
       }
-    }
-    return fetcher()
+    })()
   }
-  if(boards.length > 0) {
+
+  if( boards.length > 0 ) {
     const { boardName, lists, panel, _id } = boards[localBoardIndex]
     return (
       <>
-
         {/* THE HEADER OF BOARD PAGE */}
         <BoardTitle title={boardName} />
         <div className="elem_wrapper">
@@ -122,7 +127,6 @@ export default ({ url }) => {
               lists.map((elem, listIndex) => {
                 return (
                   <div
-                    draggable
                     key={elem._id}
                     className='list'
                     onDragOver={event => handleDragOver(event)}
@@ -154,6 +158,8 @@ export default ({ url }) => {
                       elem.tasks.map((taskObject, taskIndex) => {
                         return (
                           <div
+                            key={taskObject._id}
+                            className={taskStyles.taskContainer}
                             draggable
                             onDragStart={event => handleDragStart(event,
                               localBoardIndex,
@@ -162,24 +168,24 @@ export default ({ url }) => {
                               elem._id,
                               taskObject._id,
                               dispatch)}
-                            onDrag={event => handleDrag(event)}
+                            onDrag={event => handleDrag(event)}>
 
-                            className="task"
-                            key={taskObject._id}>
-                            <p>{taskObject.nickname}</p>
-                            {taskObject.task}
-                            <p style={{ fontSize: '.7em', fontStyle: 'oblique' }}>
+                            <p className={taskStyles.nicknameWrapper}>
+                              by: <span className={taskStyles.nickname}>
+                                {taskObject.nickname}
+                              </span>
+                            </p>
+                            <p className={taskStyles.task}>
+                              {taskObject.task}
+                            </p>
+                            <p className={taskStyles.time}
+                              style={{ fontSize: '.7em', fontStyle: 'oblique' }}>
                               {taskObject.time}
                             </p>
                           </div>
                         )
                       })
                       : null}
-                    {/* 
-                      <Tasks 
-                        tasks={elem.tasks} 
-                        onDragStart={handleDragStart(listIndex, task)} /> 
-                    */}
                   </div>
                 )
               }) : null}
@@ -196,17 +202,15 @@ export default ({ url }) => {
   }
   return null
 }
-
 function RemoveListButton({onClick}) {
   return (
     <span
       onClick={onClick}
       className='list_closeBtn'>
-      X
+      x
     </span>
   )
 }
-
 function handleDragStart(event, boardIndex, listIndex, taskIndex, listId, taskId, dispatch) {
   console.log( '%cDrag started', 'color: violet', event.target )
   return dispatch({

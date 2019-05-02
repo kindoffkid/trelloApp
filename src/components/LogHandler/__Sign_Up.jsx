@@ -22,21 +22,23 @@ export default ({ history }) => {
       const url = `/api/users/sign_up?email=${reg_email}&password=${reg_pass}&username=${reg_uname}`
       const signIn_QUERY = await fetch(url, { method: 'POST' })
       const QUERY_response = await signIn_QUERY.json()
-      console.log(
-        '%cnewUserQuery', 'color: orange',
-        signIn_QUERY, '\n',
-        QUERY_response)
-      history.push('/')
-      return dispatch({
-        type: 'SET_LOGGED',
-        payload: QUERY_response.data.email
-      })
+      if (QUERY_response.status === '200') {
+        console.log(
+          '%cnewUserQuery', 'color: orange',
+          signIn_QUERY, '\n',
+          QUERY_response)
+        history.push('/')
+        return dispatch({
+          type: 'SET_LOGGED',
+          payload: QUERY_response.data.username
+        })
+      }
     })()
   }
   const handleOnChange = event => 
     dispatch({
       category: 'REG_LOG_FORM',
-      type: 'SET_INPUT_VALUE',
+      type: 'SET_REG_INPUT_VALUE',
       name: event.target.name,
       value: event.target.value
     })
@@ -51,7 +53,8 @@ export default ({ history }) => {
         onSubmit={handleSubmit}>
         <div className={styles.form_section}>
           <label htmlFor='email-input' className={styles.form_label}>
-            Username <span style={{ color: 'red' }}>*</span>
+            Username
+            <span style={{ color: 'red' }}> *</span>
           </label>
           <input
             type='text'
@@ -71,7 +74,8 @@ export default ({ history }) => {
 
         <div className={styles.form_section}>
           <label htmlFor='email-input' className={styles.form_label}>
-            Email adress <span style={{ color: 'red' }}>*</span>
+            Email adress
+            <span style={{ color: 'red' }}> *</span>
           </label>
           <input
             type='email'

@@ -1,0 +1,30 @@
+.panel{
+  position: relative;
+  width:150px; 
+  margin-left: 15px;
+  margin-bottom:10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: .3s all;
+  animation: creation .5s;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.1);
+  &_headline{
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 7px 0;
+    text-align: center;
+    background: #3a8efc;
+    color: whitesmoke;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  }
+  &_body{
+    padding: 5px 5px;
+  }
+}
+.section{
+  
+}
+.nickname{
+    font-weight: 100;
+      
+}

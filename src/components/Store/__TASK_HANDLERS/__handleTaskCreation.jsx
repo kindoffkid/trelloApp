@@ -28,34 +28,5 @@ export default (state, { payload, boardIndex, listIndex }) => {
         )
       }
     )
-
-    //   [
-    //   ...boards.slice(0, boardIndex),
-    //   {
-    //     ...board,
-    //     lists: [
-    //       ...board.lists.slice(0, listIndex),
-    //       {
-    //         ...board.lists[listIndex],
-    //         tasks: [
-    //           ...board.lists[listIndex].tasks,
-    //           {
-    //             time: new Date().toLocaleString(undefined, {
-    //                 hour: '2-digit',
-    //                 minute: '2-digit',
-    //                 hour12: true
-    //             }),
-    //             task: payload,
-    //           }
-    //         ],
-    //         form: {
-    //           state: false,
-    //           input: '',
-    //         }
-    //       }
-    //     ]
-    //   },
-    //   ...boards.slice(boardIndex + 1)
-    // ]
   } 
 }

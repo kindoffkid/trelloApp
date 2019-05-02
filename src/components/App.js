@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route,  } from "react-router-dom";
 import "../component-assets/MainPage.scss";
 
 import Nav from './Nav/Nav'
@@ -7,7 +7,7 @@ import Board from './BoardsGlobal/BoardMainPage'
 // REDUCER AND STORE
 import createStore from './Store'
 
-import {
+import MenuPage, {
   MainMenuButton,
   MenuHeader,
   MenuInput,
@@ -25,173 +25,101 @@ import Modal from '../components/Modal'
 import FancySpinner from '../component-assets/JS/Spinner'
 import LogHandler from './LogHandler/__Sign_In'
 import __Sign_Up from './LogHandler/__Sign_Up';
+import logStyles from './app.module.scss'
 
-
+const BoardLog = () => {
+  return (
+    <div className={logStyles.panel}>
+      <header className={logStyles.panel_headline}>
+        'BoardName': LOG
+        </header>
+      <main className={logStyles.panel_body}>
+        {/* foreach */}
+        <section>
+          <h5 className={logStyles.nickname}>
+            NICKNAME
+          </h5>
+          <p>TASK</p>
+          <footer>TIME</footer>
+        </section>
+      </main>
+    </div>
+  )
+}
 export default () => {
   const [store, dispatch] = createStore()
-  const { mainMenu } = store
-
-  const handleNewBoardCreation = (event) => {
-    event.stopPropagation()
-    dispatch({ type: 'SET_FETCH_STATUS' })
-    if (store.mainMenu.input) {
-      return createBoardFetcher(store.mainMenu.input, dispatch)
-    }
-  }
 
   useEffect(() => {
-    console.log('%cRENDERING APP', 'color: violet')
+    console.log(
+      '%cRENDERING APP',
+      'color: violet'
+    )
     fetcher(dispatch)
-    checkForExistingNickname(dispatch)
   }, [])
 
-
-  const logOut = () => dispatch({
-    type: 'LOG_OUT'
-  })
+  const logOut = () => {
+    dispatch({
+      type: 'LOG_OUT'
+    })
+  }
   return (
-    !store.logged ?
-      <Ctx.Provider
-        value={{ store, dispatch }} >
-        <Router>
-          <Nav
-            nickname={store.nickname}
-            logged={store.logged}
-          />
-          <Route 
-            exact path='/' 
-            render={URL => <LogHandler {...URL}/>} />
-          <Route
-            path='/sign_up'
-            render={URL => <__Sign_Up {...URL} />}
-          />
-        </Router>
-      </Ctx.Provider>
-      :
-    // !store.nickname ? 
+    // !store.logged ?
     //   <Ctx.Provider
     //     value={{ store, dispatch }} >
-    //     <Modal /> 
+    //     <Router>
+    //       <Nav
+    //         nickname={store.nickname}
+    //         logged={store.logged}
+    //       />
+    //       <Route 
+    //         exact path='/' 
+    //         render={URL => <LogHandler {...URL}/>} />
+    //       <Route
+    //         path='/sign_up'
+    //         render={URL => <__Sign_Up {...URL} />}
+    //       />
+    //     </Router>
     //   </Ctx.Provider>
     //   :
-    store.fetchStatus ? 
-      <FancySpinner />
-      :
-      <Ctx.Provider
+    // store.fetchStatus ? 
+    //   <FancySpinner />
+    //   :
+    <Ctx.Provider
       value={{ store, dispatch }} >
       <Router>
-        <Nav
-          nickname={store.nickname}
-          
+        <Nav nickname={store.nickname}
           logged={store.logged}
           logOut={logOut}
         />
         <Route
           exact path='/'
-          render={() =>
-          (<>
-            <div className='main_menu_boards'>
-              <MainMenuButton
-                onClick={() => dispatch({
-                  type: 'SET_MENU_STATE'
-                })}
-                menuState={mainMenu.state}
-              />
-              <main
-                className="main_menu"
-                style={mainMenu.state ? { display: "block" } : { display: "none" }}>
-                <MenuHeader />
-                <MenuInput />
-
-                <Flash flash={mainMenu.flash} />
-                  <Menu_Buttons
-                    handleNewBoardCreation={
-                      handleNewBoardCreation
-                    }
-                />
-                <CloseMenuButton
-                  dispatch={dispatch} />
-              </main>
-              <BoardPanel />
-            </div>
-          </>
-          )}
+          render={() => <BoardLog
+            store={store}
+            dispatch={dispatch}
+          />}
         />
         
         <Route
           path='/boards/:id/'
-          render={ url => (<Board url={url} />)}
+          render={url => (<Board url={url} />)}
         />
       </Router>
-      </Ctx.Provider>
+    </Ctx.Provider>
   )
 }
-
-// export default () => {
-//   const [value, setValue] = useState('')
-//   const [ boards, setBoards ] = useState([])
-//   useEffect(() => console.log( 'love' ), [boards]) 
-//   async function fetcher() {
-//     try {
-
-//       const x = { name: value }
-//       const url = '/boards'
-//       const payload = await fetch(url)
-      // const payload = await fetch(url, {
-      //   method: 'POST',
-      //   body: JSON.stringify(x),
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   credentials: 'same-origin'
-      // })
-//       const data = await payload.json()
-//       if (data) {
-//         setBoards(data)
-//       }
-//     } catch (error){ console.error( error )}
-//   }
-//   return (
-//     <>
-//       <input type="text"
-//         value={value}
-//         onChange={event => setValue(event.target.value)}
-//       />
-//       <button onClick={fetcher}>SEND</button>
-//       <p>{value}</p>
-//       {boards ? 
-//         boards.map((elem, index) => {
-//           return (
-//             <div key={elem._id}>
-//               <p>{elem.boardName}</p>
-//             </div>
-//           )
-//         }) : null
-//         }
-//       </>
-//   )
-// }
-function checkForExistingNickname(dispatch) {
-  if (localStorage.getItem('LocalNickname')) {
-    dispatch({
-      type: 'SET_NICKNAME_BY_LOCALSTORAGE',
-      payload: localStorage.getItem('LocalNickname')
-    })
-  }
-}
-
 async function fetcher(dispatch) {
   try {
     const payload = await fetch('/api/boards', { method: 'GET' })
     const data = await payload.json()
     if (data) {
-      console.log( data )
+      console.log( '%cFetched Data:', 'color: gray', '\n', data )
       return dispatch({
+        category: 'BOARDS',
         type: 'SET_BOARDS',
         payload: [...data.data]
       })
     }
   } catch (errors) {
     console.error(errors.message)
+    }
   }
-}
