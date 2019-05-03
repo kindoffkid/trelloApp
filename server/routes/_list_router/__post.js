@@ -1,7 +1,6 @@
 const { StringDecoder } = require('string_decoder')
-const decoder = new StringDecoder('utf8')
 
-const { listSchema, boardSchema, taskSchema } = require('../../models')
+const { listSchema, boardSchema, logSchema } = require('../../models')
 
 const path = require('express').Router()
 
@@ -39,6 +38,7 @@ path.post('/newList?', async (req, res) => {
 path.post('/addTask?', async (req, res) => {
   try {
     const { id, task, nickname } = req.query
+
     const updateList_Query = await listSchema.updateOne(
       {
         _id: id

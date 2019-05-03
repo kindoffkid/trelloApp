@@ -16,7 +16,6 @@ export default ({ history }) => {
 
   const handleSubmit = event => {
     event.preventDefault()
-    // setLoading(true)
     
     return (async () => {
       const url = `/api/users/sign_up?email=${reg_email}&password=${reg_pass}&username=${reg_uname}`
@@ -47,7 +46,6 @@ export default ({ history }) => {
       <div className={styles.form_headline}>
         <h4>Create your account</h4>
       </div>
-      <Spinner />
       <form
         className={styles.form}
         onSubmit={handleSubmit}>

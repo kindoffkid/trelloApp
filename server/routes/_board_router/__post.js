@@ -22,5 +22,4 @@ path.post('/new?', async (req, res) => {
     })
   }
 })
-
 module.exports = path

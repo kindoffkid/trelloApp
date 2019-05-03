@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose')
-
 const boardScheme =  new Schema({
   boardName: String,
   lists: [

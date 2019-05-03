@@ -1,6 +1,6 @@
 import { arraySlicer } from '../Utils';
 
-export default (state, { payload, boardIndex, listIndex }) => {
+export default (state, { payload, log, boardIndex, listIndex }) => {
   const { boards } = state
   const board = boards[boardIndex]
   const listInCase = board.lists[listIndex]
@@ -25,7 +25,8 @@ export default (state, { payload, boardIndex, listIndex }) => {
               input: '',
             }
           }
-        )
+        ),
+        log: [log, ...board.log]
       }
     )
   } 

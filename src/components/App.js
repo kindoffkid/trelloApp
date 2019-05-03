@@ -17,7 +17,7 @@ import MenuPage, {
   BoardPanel
 } from './MenuPage'
 
-import createBoardFetcher from '../component-assets/JS/Fetchers/__newBoardFetcher'
+// import createBoardFetcher from '../component-assets/JS/Fetchers/__newBoardFetcher'
 
 // CONTEXT 
 import { Ctx } from './Ctx'
@@ -25,30 +25,8 @@ import Modal from '../components/Modal'
 import FancySpinner from '../component-assets/JS/Spinner'
 import LogHandler from './LogHandler/__Sign_In'
 import __Sign_Up from './LogHandler/__Sign_Up';
-import logStyles from './app.module.scss'
-
-const BoardLog = () => {
-  return (
-    <div className={logStyles.panel}>
-      <header className={logStyles.panel_headline}>
-        'BoardName': LOG
-        </header>
-      <main className={logStyles.panel_body}>
-        {/* foreach */}
-        <section>
-          <h5 className={logStyles.nickname}>
-            NICKNAME
-          </h5>
-          <p>TASK</p>
-          <footer>TIME</footer>
-        </section>
-      </main>
-    </div>
-  )
-}
-export default () => {
+export default ({ history }) => {
   const [store, dispatch] = createStore()
-
   useEffect(() => {
     console.log(
       '%cRENDERING APP',
@@ -58,42 +36,42 @@ export default () => {
   }, [])
 
   const logOut = () => {
-    dispatch({
-      type: 'LOG_OUT'
-    })
+    history.push('/')
+    return setTimeout(() =>  
+      dispatch({
+        type: 'LOG_OUT'
+      })
+      ,10)
   }
   return (
-    // !store.logged ?
-    //   <Ctx.Provider
-    //     value={{ store, dispatch }} >
-    //     <Router>
-    //       <Nav
-    //         nickname={store.nickname}
-    //         logged={store.logged}
-    //       />
-    //       <Route 
-    //         exact path='/' 
-    //         render={URL => <LogHandler {...URL}/>} />
-    //       <Route
-    //         path='/sign_up'
-    //         render={URL => <__Sign_Up {...URL} />}
-    //       />
-    //     </Router>
-    //   </Ctx.Provider>
-    //   :
-    // store.fetchStatus ? 
-    //   <FancySpinner />
-    //   :
+    !store.logged ?
+      <Ctx.Provider
+        value={{ store, dispatch }} >
+          <Nav
+            nickname={store.nickname}
+            logged={store.logged}
+          />
+          <Route 
+            exact path='/' 
+            render={URL => <LogHandler {...URL}/>} />
+          <Route
+            path='/sign_up'
+            render={URL => <__Sign_Up {...URL} />}
+          />
+      </Ctx.Provider>
+      :
+    store.fetchStatus ? 
+      <FancySpinner />
+      :
     <Ctx.Provider
       value={{ store, dispatch }} >
-      <Router>
         <Nav nickname={store.nickname}
           logged={store.logged}
           logOut={logOut}
         />
         <Route
           exact path='/'
-          render={() => <BoardLog
+          render={() => <MenuPage
             store={store}
             dispatch={dispatch}
           />}
@@ -103,7 +81,6 @@ export default () => {
           path='/boards/:id/'
           render={url => (<Board url={url} />)}
         />
-      </Router>
     </Ctx.Provider>
   )
 }

@@ -1,4 +1,4 @@
-const { listSchema, boardSchema, taskSchema } = require('../../models')
+const { listSchema, boardSchema, logSchema } = require('../../models')
 
 const path = require('express').Router()
 
@@ -12,13 +12,16 @@ path.delete('/deleteBoard?', async (req, res) => {
         .exec()
     const deleteAllListChilds_QUERY =
       await listSchema.deleteMany({ board: id }).exec()
+    const deleteAllLogChilds_QUERY =
+      await logSchema.deleteMany({board: id}).exec()
     res.status(200).json({
       method: 'DELETE',
       url: '/api/boards/deleteBoard',
       status: '200',
       data: {
         board: deleteBoardById_QUERY,
-        lists: deleteAllListChilds_QUERY
+        lists: deleteAllListChilds_QUERY,
+        log: deleteAllLogChilds_QUERY,
       }
     })
   } catch (error) {

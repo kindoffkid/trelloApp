@@ -52,12 +52,18 @@
   }
 }
 // BOARDmENU AND LIST CONTAINER WRAPPER
+.wrapper{
+  max-width: 75%;
+}
 .elem_wrapper {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
 }
-
+.task-wrapper{
+  max-height: 60vh;
+  overflow-y: auto;
+}
 .BoardMenu {
   display: flex;
   flex-direction: column;
@@ -106,7 +112,7 @@
     position: absolute;
     display: flex;
     justify-content: center; align-items: center;
-    right: -4%; top: -6%;
+    right: -2%; top: -2%;
     padding: 0 0 3px 0;
     min-height: 14px;
     max-height: 14px;

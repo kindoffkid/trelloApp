@@ -5,8 +5,11 @@ export default ({
   state,
   boardIndex,
   listIndex,
+  nickname,
   _listId,
-  nickname
+  // LOG CREATION
+  _boardId,
+  boardName,
 }) => {
 
   const { dispatch } = useContext(Ctx)
@@ -41,15 +44,26 @@ export default ({
       event.keyCode === 13
       && event.target.value) {
       return (async () => {
-        const url = `/api/lists/addTask?id=${_listId}&nickname=${nickname}&task=${event.target.value}&time=${Date.now()}`
-        const createNewTask_QUERY = await fetch(url, { method: 'POST' })
+        const createTaskUrl = `/api/lists/addTask?id=${_listId}&nickname=${nickname}&task=${event.target.value}&time=${Date.now()}`
+
+        const createLogUrl = `/api/logs/new?nickname=${nickname}&task=${event.target.value}&boardId=${_boardId}`
+
+        const createNewTask_QUERY = await fetch(createTaskUrl, { method: 'POST' })
+
+        const createNewLog_QUERY = await fetch(createLogUrl, { method: 'POST' })
+
+        const { status:
+          logQueryStatus,
+          data: logQueryData} = await createNewLog_QUERY.json()
+
         const { status, data:list } = await createNewTask_QUERY.json()
         status === '200' && dispatch({
           category: 'TASK_CASE',
           type: 'CREATE_TASK',
           boardIndex: boardIndex,
           listIndex: listIndex,
-          payload: list
+          payload: list,
+          log: logQueryData
         })
       })()
     }

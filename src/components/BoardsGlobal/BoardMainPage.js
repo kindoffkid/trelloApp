@@ -7,6 +7,7 @@ import BoardTitle from './BoardTitle'
 import ListForm from './Lists/__listForm'
 import { Ctx } from '../Ctx';
 
+import logStyles from '../app.module.scss'
 
 /*      BOARD PANEL      */ 
 export default ({ url }) => {
@@ -118,7 +119,8 @@ export default ({ url }) => {
   if( boards.length > 0 ) {
     const { boardName, lists, panel, _id } = boards[localBoardIndex]
     return (
-      <>
+      <div className='container' style={{display: 'flex', justifyContent: 'space-between'}}>
+      <main className='wrapper'>
         {/* THE HEADER OF BOARD PAGE */}
         <BoardTitle title={boardName} />
         <div className="elem_wrapper">
@@ -153,7 +155,12 @@ export default ({ url }) => {
                       listIndex={listIndex}
                       _listId={elem._id}
                       nickname={store.nickname}
+
+                      /* For Log Creation */
+                      _boardId={_id}
+
                     />
+                    <div className="task-wrapper">
                     {elem.tasks ?
                       elem.tasks.map((taskObject, taskIndex) => {
                         return (
@@ -185,7 +192,8 @@ export default ({ url }) => {
                           </div>
                         )
                       })
-                      : null}
+                        : null}
+                    </div>
                   </div>
                 )
               }) : null}
@@ -197,8 +205,51 @@ export default ({ url }) => {
             setBoardState={handleBoardState}
           />
         </div>
-      </>
+        </main>
+        <BoardLog
+          localBoard={boards[localBoardIndex]}
+        />
+      </div>
     );
+  }
+  return null
+}
+
+function BoardLog ({ localBoard, dispatch }) {
+  if (localBoard.log.length > 0) {
+    const { log, boardName } = localBoard
+    return (
+      <div className={logStyles.panel}>
+        <header
+          className={
+            logStyles.panel_headline}>
+              {boardName}: LOG
+        </header>
+        <div className={logStyles.bodyWrapper}>
+          {log.map((elem, index) => {
+            return (
+              <React.Fragment key={elem._id}>
+                <main className=
+                  {logStyles.panel_body}>
+                  {/* foreach */}
+                  <section>
+                    <h5 className={logStyles.nickname}>
+                      by: {elem.nickname}
+                    </h5>
+                    <p>
+                      {elem.task}
+                    </p>
+                    <footer>
+                      {elem.time}
+                    </footer>
+                  </section>
+                </main>
+              </React.Fragment>
+            )
+          })}
+        </div>
+      </div>
+    )
   }
   return null
 }

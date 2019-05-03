@@ -5,7 +5,8 @@ const path = require('express').Router()
 path.get('/', async (req, res) => {
   try {
     const getAllBoards_QUERY = await boardSchema.find()
-      .populate({ path: 'lists', select: '_id listName tasks'})
+      .populate({ path: 'lists', select: '_id listName tasks' })
+      .populate({path: 'log', select: '_id nickname task time'})
       .exec()
     console.log( getAllBoards_QUERY )
     res.status(200).json({
@@ -32,6 +33,19 @@ path.get('/', async (req, res) => {
                 month: 'short'
               })
             }))
+          })),
+          log: board.log.map(elem => ({
+            _id: elem._id,
+            nickname: elem.nickname,
+            task: elem.task,
+            time: new Date(elem.time).toLocaleString(undefined, {
+              hour12: true,
+              hour: '2-digit',
+              minute: '2-digit',
+              weekday: 'short',
+              day: '2-digit',
+              month: 'short'
+            })
           }))
         }
        })

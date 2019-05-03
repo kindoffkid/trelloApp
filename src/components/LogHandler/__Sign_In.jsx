@@ -69,18 +69,14 @@ export default ({ history }) => {
         <h5> Sign in to Trello clone app</h5>
       </div>
 
-      <form
-        className={styles.form}
-        onSubmit={handleSubmit}
-        >
+      <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.form_section}>
-          <label
-            htmlFor='email-input' className={styles.form_label}>
+          <label htmlFor='email-input' className={styles.form_label}>
             Email adress
           </label>
           <input
             type='email'
-            id='email-input' 
+            id='email-input'
             name='log_email'
             value={log_email}
             onFocus={handleOnFocus}
@@ -88,9 +84,9 @@ export default ({ history }) => {
             min={5}
             max={16}
             required
+            autoComplete='nope'
           />
-          <span
-            className='form-section-flash' />
+          <span className='form-section-flash' />
         </div>
 
         <div className={styles.form_section}>
@@ -105,26 +101,26 @@ export default ({ history }) => {
             min={5}
             max={16}
             required
+            autoComplete='nope'
           />
           <span className='form-section-flash' />
         </div>
 
         <div
           className={styles.form_section}
-          style={{ marginTop: 25, marginBottom: 10}}>
-          <input 
-            type='submit' 
+          style={{ marginTop: 25, marginBottom: 10 }}>
+          <input
+            type='submit'
             value='Sign in'
             className={styles.submitButton}
           />
         </div>
-        <p className={styles.flash_alert}>
-          {flashAlert}
-        </p>
+        <p className={styles.flash_alert}>{flashAlert}</p>
       </form>
 
       <div className={styles.sign_up}>
-        <p>New to this app? 
+        <p>
+          New to this app?
           <Link to='/sign_up'> Sign up</Link>
         </p>
       </div>
